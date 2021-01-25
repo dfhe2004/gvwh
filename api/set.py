@@ -12,12 +12,10 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
 
         obj = urlparse(self.path)    
-        ip = obj.get('ip',None)
-        if bool(ip):
-            with open('./ip.txt', 'w') as fh:
-                txt = file.write(ip)
-        else:
-            txt = 'invalid ip'
+        txt = obj.ip
+        with open('./ip.txt', 'w') as fh:
+            txt = fh.write(ip)
+        
         message = cow.Cowacter().milk(txt)
         self.wfile.write(message.encode())
         return
