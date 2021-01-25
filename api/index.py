@@ -17,6 +17,6 @@ class handler(BaseHTTPRequestHandler):
             with open('ip.txt', 'r') as file:
                 txt = file.read().strip()
 
-        message = cow.Cowacter().milk(txt)
+        message = cow.Cowacter().milk(self.path)
         self.wfile.write(message.encode())
         return
