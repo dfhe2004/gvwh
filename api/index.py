@@ -1,25 +1,28 @@
 #!coding=utf-8
 
-from http.server import BaseHTTPRequestHandler
-
 import os
 from cowpy import cow
 
-class handler(BaseHTTPRequestHandler):
 
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type','text/plain')
-        self.end_headers()
-        
+from sanic import Sanic
+from sanic.response import json
+app = Sanic()
+
+
+@app.route('/')
+@app.route('/<ip:ip>')
+async def index(request, ip=""):
+    if bool(ip):
+        with open('./ip.txt', 'w') as fh:
+            fh.write(ip)
+        txt = 'save ip:%s'%ip    
+
+    else:
         if not os.path.exists('./ip.txt'):         
             txt = 'missing'
         else:
-            with open('ip.txt', 'r') as file:
+            with open('./ip.txt', 'r') as file:
                 txt = file.read().strip()
-
-        message = cow.Cowacter().milk(txt)
-        self.wfile.write(message.encode())
-        return
-
-
+    
+    txt = cow.Cowacter().milk(txt)
+    return txt.encode()
