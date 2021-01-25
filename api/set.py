@@ -1,7 +1,7 @@
 #!coding=utf-8
 
 from http.server import BaseHTTPRequestHandler
-import os
+from urllib.parse import urlparse
 from cowpy import cow
 
 class handler(BaseHTTPRequestHandler):
@@ -10,13 +10,14 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type','text/plain')
         self.end_headers()
-        
-        if not os.path.exists('./ip.txt'):         
-            txt = '消失在风中'
-        else:
-            with open('ip.txt'), 'r') as file:
-                txt = file.read().strip()
 
+        obj = urlparse(self.path)    
+        ip = obj.get('ip',None)
+        if bool(ip):
+            with open('./ip.txt', 'w') as fh:
+                txt = file.write(ip)
+        else:
+            txt = 'invalid ip'
         message = cow.Cowacter().milk(txt)
         self.wfile.write(message.encode())
         return
