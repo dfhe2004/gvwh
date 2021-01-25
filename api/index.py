@@ -5,12 +5,11 @@ from cowpy import cow
 
 
 from sanic import Sanic
-from sanic.response import json
 app = Sanic()
 
 
-@app.route('/')
-@app.route('/<ip:ip>')
+@app.route('/api/')
+@app.route('/api/ip/<ip>')
 async def index(request, ip=""):
     if bool(ip):
         with open('./ip.txt', 'w') as fh:
