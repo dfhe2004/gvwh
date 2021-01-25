@@ -14,7 +14,7 @@ class handler(BaseHTTPRequestHandler):
         if not os.path.exists('./ip.txt'):         
             txt = 'missing'
         else:
-            with open('ip.txt'), 'r') as file:
+            with open('ip.txt', 'r') as file:
                 txt = file.read().strip()
 
         message = cow.Cowacter().milk(txt)
