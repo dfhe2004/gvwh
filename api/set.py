@@ -14,8 +14,8 @@ class handler(BaseHTTPRequestHandler):
         obj = urlparse(self.path)    
         txt = obj.ip
         with open('./ip.txt', 'w') as fh:
-            txt = fh.write(ip)
+            txt = fh.write(txt)
         
-        message = cow.Cowacter().milk(txt)
+        message = cow.Cowacter().milk(self.path)
         self.wfile.write(message.encode())
         return
