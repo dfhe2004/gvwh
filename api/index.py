@@ -12,7 +12,7 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         
         if not os.path.exists('./ip.txt'):         
-            txt = 'missing'
+            txt = '消失在风中'
         else:
             with open('ip.txt', 'r') as file:
                 txt = file.read().strip()
